@@ -1,5 +1,33 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .container
+    h1 Exercise tracker
+    form(action='/api/exercise/new-user', method='post')
+      h3 Create a New User
+      p
+        code POST /api/exercise/new-user
+      input#uname(type='text', name='username', placeholder='username')
+      input(type='submit', value='Submit')
+    form#add(action='/api/exercise/add', method='post')
+      h3 Add exercises
+      p
+        code POST /api/exercise/add
+      input#uid(type='text', name='userId', placeholder='userId*')
+      input#desc(type='text', name='description', placeholder='description*')
+      input#dur(type='text', name='duration', placeholder='duration* (mins.)')
+      input#dat(type='text', name='date', placeholder='date (yyyy-mm-dd)')
+      input(type='submit', value='Submit')
+    p
+      strong GET users's exercise log:
+      code GET /api/exercise/log?{userId}[&from][&to][&limit]
+    p
+      strong { }
+      |  = required,
+      strong [ ]
+      |  = optional
+    p
+      strong from, to
+      |  = dates (yyyy-mm-dd);
+      strong limit
+      |  = number

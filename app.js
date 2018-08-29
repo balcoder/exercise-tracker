@@ -5,7 +5,18 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userRouter = require('./routes/user');
+var exerciseRouter = require('./routes/exercise');
+
+// Connect to mongodb database
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://admin:exercisesquid101@ds235022.mlab.com:35022/exercise-tracker' )
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('connected to database');
+});
 
 var app = express();
 
@@ -19,8 +30,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// Add imported route-handling code to the request handling chain
+app.use('/api/exercise/add', exerciseRouter);
+app.use('/api/exercise', userRouter);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
