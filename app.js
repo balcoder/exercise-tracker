@@ -4,13 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// to use the .env file variables
+require('dotenv').config();
+
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 var exerciseRouter = require('./routes/exercise');
 
 // Connect to mongodb database
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://admin:exercisesquid101@ds235022.mlab.com:35022/exercise-tracker' )
+//mongoose.connect('mongodb://admin:exercisesquid101@ds235022.mlab.com:35022/exercise-tracker' )
+mongoose.connect(process.env.MONGO_URI)
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
