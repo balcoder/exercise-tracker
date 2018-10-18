@@ -13,7 +13,6 @@ var exerciseRouter = require('./routes/exercise');
 
 // Connect to mongodb database
 const mongoose = require('mongoose')
-//mongoose.connect('mongodb://admin:exercisesquid101@ds235022.mlab.com:35022/exercise-tracker' )
 mongoose.connect(process.env.MONGO_URI)
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
